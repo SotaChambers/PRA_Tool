@@ -161,4 +161,4 @@ cython_debug/
 .DS_Store
 .python-version
 config/secret.yaml
-driver/*
+driver/chromedriver
