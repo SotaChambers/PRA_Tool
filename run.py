@@ -16,7 +16,7 @@ def main(
     secret_cfg_path: Path,
     pipeline_cfg_path: Path,
 ):
-    config = read_config(general_cfg_path, secret_cfg_path)
+    config = read_config(secret_path=secret_cfg_path, general_path=general_cfg_path)
     pipeline_cfg = yaml.safe_load(pipeline_cfg_path.open("r"))
     Scraper(config, pipeline_cfg)()
 
