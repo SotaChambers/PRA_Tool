@@ -1,0 +1,17 @@
+login:
+  input_id:
+    action: input
+    xpath: //*[@id="id"]
+    content: ABLG9728
+  input_password:
+    action: input
+    xpath: //*[@id="pass"]
+    content: 1234Abcd
+  click_submit:
+    action: click
+    xpath: //*[@id='input_form']/form/p/input
+
+home:
+  click_point_confirm:
+    action: click
+    xpath: //*[@id="LnkV0800_002Top"]
