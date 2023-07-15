@@ -1,9 +1,9 @@
 [tool.poetry]
-name = "pra-tool"
+name = "rpa-tool"
 version = "0.1.0"
 description = ""
 authors = ["SotaChambers <snakamura@ridge-i.com>"]
-packages = [{include = "pra_tool"}]
+packages = [{include = "rpa_tool"}]
 
 [tool.poetry.dependencies]
 python = "^3.10"
