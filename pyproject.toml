@@ -12,7 +12,38 @@ pydantic = "^2.0"
 beautifulsoup4 = "^4.12.2"
 requests = "^2.31.0"
 selenium = "^4.10.0"
+click = "^8.1.5"
 
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.4.0"
+black = "^23.7.0"
+autoflake = "^2.2.0"
+isort = "^5.12.0"
+pyproject-flake8 = "^6.0.0.post1"
+autoflake8 = "^0.4.0"
+
+[tool.isort]
+profile = "black"
+line_length = 127
+multi_line_output = 3
+
+[tool.flake8]
+max-line-length = 127
+
+[tool.black]
+target-version = ['py310']
+line-length = 127
+
+[tool.mypy]
+ignore_missing_imports = "True"
+
+[tool.autoflake]
+in-place = true
+recursive = true
+remove-all-unused-imports = true
+remove-duplicate-keys = true
+remove-unused-variables = true
 
 [build-system]
 requires = ["poetry-core"]
