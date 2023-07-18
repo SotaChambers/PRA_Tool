@@ -5,6 +5,7 @@ from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException
 
 
+
 class Scraper:
     def __init__(self, config: dict, pipeline_cfg: dict):
         self._id = config.secret.id

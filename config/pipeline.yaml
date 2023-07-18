@@ -1,27 +1,12 @@
 login:
   input_id:
-    category: xpath
-    data: //*[@id="head_hunter_email"]
+    xpath: //*[@id="id"]
   input_password:
-    category: xpath
-    data: //*[@id="head_hunter_password"]
+    xpath: //*[@id="pass"]
   click_submit:
-    category: xpath
-    data: //*[@id="new_head_hunter"]/div/input
+    xpath: //*[@id='input_form']/form/p/input
+
 home:
   click_point_confirm:
     action: click
-    category: xpath
-    data: /html/body/header/nav/ul/li[2]/a
-change_search_page:
-  click_search_list_button:
-    action: click
-    category: xpath
-    data: //*[@id="AG-RS-01"]/div/div[1]/ul/li[2]/a
-# select_in_list:
-#   click_list_id:
-#     action: click
-#     xpath: xxxx
-#   click_button:
-#     action: click
-#     xpath: xxxx
+    xpath: //*[@id="LnkV0800_002Top"]

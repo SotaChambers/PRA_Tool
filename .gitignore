@@ -161,5 +161,5 @@ cython_debug/
 .DS_Store
 .python-version
 config/secret.yaml
-driver/chromedriver
-data/*.xlsx
+driver/*
+.vscode
