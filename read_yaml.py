@@ -11,6 +11,7 @@ class SecretConfig(BaseModel):
 
 class GeneralConfig(BaseModel):
     url: str
+    keyword: str
 
 class Config(BaseModel):
     secret: SecretConfig

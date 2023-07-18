@@ -1,0 +1,27 @@
+login:
+  input_id:
+    category: xpath
+    data: //*[@id="head_hunter_email"]
+  input_password:
+    category: xpath
+    data: //*[@id="head_hunter_password"]
+  click_submit:
+    category: xpath
+    data: //*[@id="new_head_hunter"]/div/input
+home:
+  click_point_confirm:
+    action: click
+    category: xpath
+    data: /html/body/header/nav/ul/li[2]/a
+change_search_page:
+  click_search_list_button:
+    action: click
+    category: xpath
+    data: //*[@id="AG-RS-01"]/div/div[1]/ul/li[2]/a
+# select_in_list:
+#   click_list_id:
+#     action: click
+#     xpath: xxxx
+#   click_button:
+#     action: click
+#     xpath: xxxx
