@@ -163,3 +163,4 @@ cython_debug/
 config/secret.yaml
 driver/*
 .vscode
+data/*.xlsx
