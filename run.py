@@ -1,10 +1,12 @@
 from pathlib import Path
+import time
 
 import click
-import yaml
+from loguru import logger
 
 from read_yaml import read_config
 from src.scraping import Scraper
+from utils.utils import get_dt_now
 
 
 @click.command()
@@ -13,10 +15,12 @@ from src.scraping import Scraper
 def main(
     general_cfg_path: Path,
     secret_cfg_path: Path,
-    pipeline_cfg_path: Path,
 ):
-    config = read_config(secret_path=secret_cfg_path, general_path=general_cfg_path)
+    dt_now = get_dt_now()
+    logger.add(f"logs/{dt_now}.log", rotation="500MB")
+    logger.info("Start RPA Tool...")
 
+    config = read_config(secret_path=secret_cfg_path, general_path=general_cfg_path)
     Scraper(config)()
 
 
