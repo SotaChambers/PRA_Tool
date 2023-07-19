@@ -1,2 +1,29 @@
-url: https://agt.directscout.recruit.co.jp/agent/login
+#  ========== 編集する箇所 ==========
 keyword: ⑤ChatGPT/メディアDXアプリPM～40歳
+max_num_people: 1
+#  ========== 以下は編集禁止 ==========
+url: https://agt.directscout.recruit.co.jp/agent/login
+scout_list_path: data/ChatGPT_スカウト文章.xlsx
+chatgpt_input: |
+  私は転職エージェントで，下にある求人票を持っています．以下の求職者が返信したくなるような簡単なスカウト文をテンプレートに沿って300字以内で作成してください．
+  禁止事項
+  ・求職者のことをあなたと呼ぶ
+
+  ===== テンプレート =====
+  【タイトル】xxxx
+  【本文】
+  初めまして、MichaelPageの山本と申します。xxxx
+
+  ===== 求職者の情報 =====
+  企業名: {}
+
+  現年収: {}
+
+  職務内容: {}
+
+  ===== 求人票 =====
+  企業名: {}
+
+  想定年収: {}
+
+  {}

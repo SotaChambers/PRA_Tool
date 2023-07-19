@@ -13,6 +13,8 @@ beautifulsoup4 = "^4.12.2"
 requests = "^2.31.0"
 selenium = "^4.10.0"
 click = "^8.1.5"
+pandas = "^2.0.3"
+openpyxl = "^3.1.2"
 
 
 [tool.poetry.group.dev.dependencies]
@@ -34,9 +36,6 @@ max-line-length = 127
 [tool.black]
 target-version = ['py310']
 line-length = 127
-
-[tool.mypy]
-ignore_missing_imports = "True"
 
 [tool.autoflake]
 in-place = true

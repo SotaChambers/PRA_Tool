@@ -12,6 +12,9 @@ class SecretConfig(BaseModel):
 class GeneralConfig(BaseModel):
     url: str
     keyword: str
+    max_num_people: int
+    scout_list_path: str
+    chatgpt_input: str
 
 
 class Config(BaseModel):
