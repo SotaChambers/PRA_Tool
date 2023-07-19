@@ -1,17 +1,18 @@
 import re
+from pathlib import Path
 from time import sleep
+
 import pandas as pd
 from loguru import logger
-from pathlib import Path
 from selenium import webdriver
+from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
-from selenium.common.exceptions import NoSuchElementException
 
 
 class Scraper:
-    def __init__(self, config: dict):
+    def __init__(self, config: dict) -> None:
         self._id = config.secret.id
         self._password = config.secret.password
         self.keyword = config.general.keyword
@@ -45,7 +46,7 @@ class Scraper:
         logger.info("End Read Excel...")
         return target_company_name, target_salary, target_content
 
-    def __call__(self):
+    def __call__(self) -> None:
         self._login()
         self._home_to_scout()
         self._scout_to_condition_list()
@@ -60,15 +61,15 @@ class Scraper:
         self.driver.find_element(By.XPATH, '//*[@id="head_hunter_password"]').send_keys(self.password)
         self.driver.find_element(By.XPATH, '//*[@id="new_head_hunter"]/div/input').click()
 
-    def _home_to_scout(self):
+    def _home_to_scout(self) -> None:
         logger.info("Click スカウト Button...")
         self.driver.find_element(By.XPATH, "/html/body/header/nav/ul/li[2]/a").click()
 
-    def _scout_to_condition_list(self):
+    def _scout_to_condition_list(self) -> None:
         logger.info("Click 検索条件リスト Button...")
         self.driver.find_element(By.XPATH, '//*[@id="AG-RS-01"]/div/div[1]/ul/li[2]/a').click()
 
-    def _condition_list_to_candidate_list(self):
+    def _condition_list_to_candidate_list(self) -> None:
         logger.info(f"Select Keyword : {self.keyword}...")
         keyword = self.keyword
         base_xpath = '//*[@id="AG-SK-01"]/div/div[1]/table/tbody/tr[{}]/td[1]/p'
@@ -95,7 +96,7 @@ class Scraper:
         logger.error(f"Not Found {self.keyword}")
         raise NotImplementedError("検索ワードが見つかりませんでした")
 
-    def _candidate_list_to_candidate_detail(self):
+    def _candidate_list_to_candidate_detail(self) -> None:
         start_idx = 4
         base_xpath = '//*[@id="drawer"]/div[{}]/div'
         logger.info("Select Candidate...")
@@ -140,7 +141,7 @@ class Scraper:
             # TODO: メインタブに戻る
             self.driver.switch_to.window(self.driver.window_handles[0])
 
-    def _create_msg(self):
+    def _create_msg(self) -> None:
         new_tab_link = f"/agent/customers/{self.user_id}/scouts/new?from=resume_detail"
         self.driver.get("https://agt.directscout.recruit.co.jp" + new_tab_link)
         msg = self.chatgpt_input.format(
