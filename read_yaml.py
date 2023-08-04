@@ -7,6 +7,7 @@ from pydantic import BaseModel
 class SecretConfig(BaseModel):
     id: str
     password: str
+    API_TOKEN: str
 
 
 class GeneralConfig(BaseModel):
@@ -14,6 +15,8 @@ class GeneralConfig(BaseModel):
     keyword: str
     max_num_people: int
     scout_list_path: str
+    engine: str
+    cost_1k: float
     chatgpt_input: str
 
 

@@ -1,7 +1,8 @@
 import re
-from pathlib import Path
 from time import sleep
+from typing import Literal
 
+import openai
 import pandas as pd
 from loguru import logger
 from selenium import webdriver
@@ -12,13 +13,17 @@ from selenium.webdriver.common.by import By
 
 
 class Scraper:
-    def __init__(self, config: dict) -> None:
+    def __init__(self, config: dict, mode: Literal["dummy", "main"] = "dummmy") -> None:
+        self.mode = mode
         self._id = config.secret.id
         self._password = config.secret.password
         self.keyword = config.general.keyword
         self.max_num_people = config.general.max_num_people
         self.scout_list_path = config.general.scout_list_path
         self.chatgpt_input = config.general.chatgpt_input
+        self.api_token = config.secret.API_TOKEN
+        self.engine = config.general.engine
+        self.cost_1k = config.general.cost_1k
 
         self.target_company_name, self.target_salary, self.target_content = self._read_scout_list()
 
@@ -126,9 +131,6 @@ class Scraper:
             ).text
             logger.info(f"企業名 : {self.company_name}, 年収 : {self.salary}, プロフィール : \n {self.profile}")
 
-            # TODO: 一旦txtファイルで出力
-            Path("output.txt").write_text(f"{self.company_name}\n\n{self.salary}\n\n{self.profile}")
-
             # 新しいタブを開く
             self.driver.execute_script("window.open('');")
             # 新しいタブに移動
@@ -136,19 +138,57 @@ class Scraper:
             # スカウトページにアクセス
             self.driver.get("https://agt.directscout.recruit.co.jp" + new_tab_link)
 
-            self._create_msg()
+            # ChatGPTに投げるメッセージを作成
+            msg_for_gpt = self._create_msg()
+            # ChatGPTに投げる
+            msg = self._send_gpt(msg_for_gpt, self.mode)
+            # 返ってきたメッセージをタイトルと本文に分ける
+            title, body = self._separete_title_body(msg)
+            # タイトルと本文の入力xpathを取得，ChatGPTに投げる，[タイトル]と[本文]を入力
+            title_element = self.driver.find_element(By.XPATH, '//*[@id="message_title"]')
+            title_element.clear()
+            title_element.send_keys(title)
+            body_element = self.driver.find_element(By.XPATH, '//*[@id="message_body"]')
+            body_element.clear()
+            body_element.send_keys(body)
 
-            # TODO: メインタブに戻る
+            # メインタブに戻る
             self.driver.switch_to.window(self.driver.window_handles[0])
 
-    def _create_msg(self) -> None:
+    def _create_msg(self) -> str:
         new_tab_link = f"/agent/customers/{self.user_id}/scouts/new?from=resume_detail"
         self.driver.get("https://agt.directscout.recruit.co.jp" + new_tab_link)
         msg = self.chatgpt_input.format(
             self.company_name, self.salary, self.profile, self.target_company_name, self.target_salary, self.target_content
         )
         logger.info(f"Message to ChatGPT is \n {msg}")
-        # TODO: タイトルと本文の入力xpathを取得，ChatGPTに投げる，[タイトル]と[本文]を入力
+        return msg
+
+    def _send_gpt(self, msg: str, mode: str = "dummy") -> str:
+        openai.api_key = self.api_token
+        if mode == "dummy":
+            logger.info("ChatGPT Dummyモードで実行中...お金は掛かっていません")
+            response = {"choices": [{"text": "【タイトル】xxxx\n【本文】\n初めまして、MichaelPageの山本と申します。\nこれはテストです。\nご連絡お待ちしています。"}]}
+            response = response["choices"][0]["text"]
+        elif mode == "main":
+            logger.info("ChatGPT 本番モードで実行中...お金が掛かります")
+            response = openai.Completion.create(engine=self.engine, prompt=msg)
+            # お金の計算
+            tokens_used = response["usage"]["total_tokens"]
+            cost = tokens_used * self.cost_1k / 1000
+            logger.info(f"このリクエストで使用されたトークン数: {tokens_used}")
+            logger.info(f"推定料金（USD）: {cost}")
+            response = response.choices[0].text
+        else:
+            raise NotImplementedError("modeが不正です")
+
+        logger.info(f"ChatGPTからの返答: \n {response}")
+        return response
+
+    def _separete_title_body(self, msg: str) -> tuple[str, str]:
+        title = msg.split("\n")[0].replace("【タイトル】", "")
+        body = "\n".join(msg.split("\n")[1:]).replace("【本文】", "")
+        return title, body
 
     def shotdown(self) -> None:
         self.driver.quit()

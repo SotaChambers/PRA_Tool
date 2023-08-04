@@ -1,9 +1,11 @@
 #  ========== 編集する箇所 ==========
 keyword: ⑤ChatGPT/メディアDXアプリPM～40歳
 max_num_people: 1
-#  ========== 以下は編集禁止 ==========
+#  ========== 以下は編集不要 ==========
 url: https://agt.directscout.recruit.co.jp/agent/login
 scout_list_path: data/ChatGPT_スカウト文章.xlsx
+engine: gpt-3.5-turbo
+cost_1k: 0.02
 chatgpt_input: |
   私は転職エージェントで，下にある求人票を持っています．以下の求職者が返信したくなるような簡単なスカウト文をテンプレートに沿って300字以内で作成してください．
   禁止事項
