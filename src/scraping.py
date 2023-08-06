@@ -30,7 +30,7 @@ class Scraper:
         chrome_options = Options()
         chrome_options.add_experimental_option("detach", True)
 
-        webdriver_service = Service("driver/chromedriver")
+        webdriver_service = Service(config.general.driver_path)
         self.driver = webdriver.Chrome(service=webdriver_service, options=chrome_options)
         self.driver.get(config.general.url)
 
@@ -52,13 +52,14 @@ class Scraper:
         return target_company_name, target_salary, target_content
 
     def __call__(self) -> None:
-        self._login()
-        self._home_to_scout()
-        self._scout_to_condition_list()
-        self._condition_list_to_candidate_list()
-        self._candidate_list_to_candidate_detail()
-
-        # self.shotdown()
+        try:
+            self._login()
+            self._home_to_scout()
+            self._scout_to_condition_list()
+            self._condition_list_to_candidate_list()
+            self._candidate_list_to_candidate_detail()
+        except Exception as e:
+            logger.error(f"Error occurred: {e}")
 
     def _login(self) -> None:
         logger.info("Login...")

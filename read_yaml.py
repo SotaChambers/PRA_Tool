@@ -1,7 +1,7 @@
 from pathlib import Path
 
 import yaml
-from pydantic import BaseModel
+from pydantic import BaseModel, validator
 
 
 class SecretConfig(BaseModel):
@@ -12,12 +12,27 @@ class SecretConfig(BaseModel):
 
 class GeneralConfig(BaseModel):
     url: str
+    driver_path: str
     keyword: str
     max_num_people: int
     scout_list_path: str
     engine: str
     cost_1k: float
     chatgpt_input: str
+
+    @validator("driver_path", pre=True, always=True)
+    def check_driver_path_exists(cls, v):
+        path = Path(v)
+        if not path.exists():
+            raise ValueError(f"Driverが存在しません. {v}")
+        return v
+
+    @validator("scout_list_path", pre=True, always=True)
+    def check_scout_list_path_exists(cls, v):
+        path = Path(v)
+        if not path.exists():
+            raise ValueError(f"スカウトリストが存在しません. {v}")
+        return v
 
 
 class Config(BaseModel):
