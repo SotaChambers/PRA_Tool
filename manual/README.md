@@ -20,9 +20,13 @@
 - インターネットに接続できること
 
 ## 1.2. ファイルの準備
-1. zip ファイルを任意の場所に保存します
+1. zip をインストールします
+![zip_install](img/zip_install.png)
+
+2. zip ファイルを任意の場所に保存します
 ![setting_zip](img/setting_zip.png)
-2. zip ファイルを解凍します
+
+3. zip ファイルを解凍します
 ![unzip.png](img/unzip.png)
 
 ## 1.3. Python のインストール
@@ -61,6 +65,7 @@ Poetry (version 1.3.2)
 1. ブラウザから確かめる場合
    - 右上の点3つボタンをクリック → `help/chromeについて` をクリック
    ![chrome_help](img/chrome_help.png)
+
    - versionを確かめる(この例だと`115`となる)
    ![chrome_version](img/chrome_version.png)
 
@@ -69,6 +74,7 @@ Poetry (version 1.3.2)
 ```
 "C:\Program Files (x86)\Google\Chrome\Application\chrome.exe" --version
 ```
+
 - Macの場合
 ```
 /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --version
