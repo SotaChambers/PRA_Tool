@@ -10,7 +10,7 @@
     - [Driverのインストール](#driverのインストール)
     - [Driverの配置](#driverの配置)
 - [2. 実行準備(初回のみ)](#2-実行準備初回のみ)
-- [2. 実行方法](#2-実行方法)
+- [3. 実行方法](#3-実行方法)
 - [APPENDIX](#appendix)
   - [ChatGPT API TOKENの取得方法](#chatgpt-api-tokenの取得方法)
 
@@ -19,6 +19,8 @@
 - PC 環境：Window 10
 - 管理者アカウントでPCにログインしていること
 - インターネットに接続できること
+
+**※本システムはWebサイトの仕様がアップデートされると，改修が必要となります．**
 
 ## 1.2. ファイルの準備
 1. zip をインストールします
@@ -71,12 +73,7 @@ Poetry (version 1.3.2)
    ![chrome_version](img/chrome_version.png)
 
 2. コマンドから確かめる場合
-- Windowの場合
-```
-"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe" --version
-```
-
-- Macの場合
+- Macの場合のみ
 ```
 /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --version
 ```
@@ -98,7 +95,7 @@ zipを解凍し，`chromedriver.exe`を`driver`フォルダの下に移動する
      - API_TOKEN: ChatGPTのAPI TOKEN(※取得方法はAPPENDIX)
 
 
-# 2. 実行方法
+# 3. 実行方法
 
 1. `config/general.yaml`を設定する
 以下の欄の値を必要に応じて修正する
@@ -122,6 +119,13 @@ max_num_people: 1
   - ChatGPTの有料会員であること
 - 方法
   - [公式サイト](https://auth0.openai.com/u/login/identifier?state=hKFo2SBITkdDR0tDUnI4ZmgyaS16c1dURXJVTExyQjhheF9raqFur3VuaXZlcnNhbC1sb2dpbqN0aWTZIElENThVck1BZFFwenJLVTdfRVJkZ183TlFJZVJRY2tIo2NpZNkgRFJpdnNubTJNdTQyVDNLT3BxZHR3QjNOWXZpSFl6d0Q)へLoginする
+  - `Billing/Overview`を選択し，`Set up paid account`をクリック
+  ![setting_openai](img/setting_openai.png)
+  - `I'm an individual`をクリック
+  ![setting_openai2](img/setting_openai2.png)
+  - クレジットカード情報と住所を入れる
+  - `Billing/Usage limits`を選択し，limit額を入力
+  ![setting_openai3](img/setting_openai3.png)
   - 右上の`Personal`/`View API keys`を選択
   - `Create new secret key`をクリック
   - 名前をつけてKeyを発行する(※再度keyを見ることは多分できないので，人に見られないところにメモしておく)

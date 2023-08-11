@@ -120,16 +120,33 @@ class Scraper:
             # プロフィールを取得
             self.driver.find_element(By.ID, f"customer-masked-id-{self.user_id}").click()
             sleep(3)
-            self.company_name = self.driver.find_element(
-                By.XPATH, '//*[@id="drawer"]/div[3]/div[2]/div/div[1]/div/div[1]/div[4]/div/div/div[1]/table/tbody/tr[1]/td/p'
-            ).text
-            self.salary = self.driver.find_element(
-                By.XPATH, '//*[@id="drawer"]/div[3]/div[2]/div/div[1]/div/div[1]/div[4]/div/div/div[1]/table/tbody/tr[6]/td/p'
-            ).text
-            self.profile = self.driver.find_element(
-                By.XPATH,
-                '//*[@id="drawer"]/div[3]/div[2]/div/div[1]/div/div[1]/div[4]/div/div/div[1]/table/tbody/tr[7]/td/pre',
-            ).text
+            # adhoc: 送受信履歴がある(3)かないか(4)でXPathが変わる
+            try:
+                self.company_name = self.driver.find_element(
+                    By.XPATH,
+                    '//*[@id="drawer"]/div[3]/div[2]/div/div[1]/div/div[1]/div[4]/div/div/div[1]/table/tbody/tr[1]/td/p',
+                ).text
+                self.salary = self.driver.find_element(
+                    By.XPATH,
+                    '//*[@id="drawer"]/div[3]/div[2]/div/div[1]/div/div[1]/div[4]/div/div/div[1]/table/tbody/tr[6]/td/p',
+                ).text
+                self.profile = self.driver.find_element(
+                    By.XPATH,
+                    '//*[@id="drawer"]/div[3]/div[2]/div/div[1]/div/div[1]/div[4]/div/div/div[1]/table/tbody/tr[7]/td/pre',
+                ).text
+            except NoSuchElementException:
+                self.company_name = self.driver.find_element(
+                    By.XPATH,
+                    '//*[@id="drawer"]/div[3]/div[2]/div/div[1]/div/div[1]/div[3]/div/div/div[1]/table/tbody/tr[1]/td/p',
+                ).text
+                self.salary = self.driver.find_element(
+                    By.XPATH,
+                    '//*[@id="drawer"]/div[3]/div[2]/div/div[1]/div/div[1]/div[3]/div/div/div[1]/table/tbody/tr[6]/td/p',
+                ).text
+                self.profile = self.driver.find_element(
+                    By.XPATH,
+                    '//*[@id="drawer"]/div[3]/div[2]/div/div[1]/div/div[1]/div[3]/div/div/div[1]/table/tbody/tr[7]/td/pre',
+                ).text
             logger.info(f"企業名 : {self.company_name}, 年収 : {self.salary}, プロフィール : \n {self.profile}")
 
             # 新しいタブを開く
@@ -169,17 +186,21 @@ class Scraper:
         openai.api_key = self.api_token
         if mode == "dummy":
             logger.info("ChatGPT Dummyモードで実行中...お金は掛かっていません")
-            response = {"choices": [{"text": "【タイトル】xxxx\n【本文】\n初めまして、MichaelPageの山本と申します。\nこれはテストです。\nご連絡お待ちしています。"}]}
+            response = {
+                "choices": [{"message": {"content": "【タイトル】xxxx\n【本文】\n初めまして、MichaelPageの山本と申します。\nこれはテストです。\nご連絡お待ちしています。"}}]
+            }
             response = response["choices"][0]["text"]
         elif mode == "main":
             logger.info("ChatGPT 本番モードで実行中...お金が掛かります")
-            response = openai.Completion.create(engine=self.engine, prompt=msg)
+            response = response = openai.ChatCompletion.create(
+                model="gpt-3.5-turbo", messages=[{"role": "user", "content": msg}]
+            )
             # お金の計算
             tokens_used = response["usage"]["total_tokens"]
             cost = tokens_used * self.cost_1k / 1000
             logger.info(f"このリクエストで使用されたトークン数: {tokens_used}")
             logger.info(f"推定料金（USD）: {cost}")
-            response = response.choices[0].text
+            response = response["choices"][0]["message"]["content"]
         else:
             raise NotImplementedError("modeが不正です")
 

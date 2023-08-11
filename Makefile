@@ -1,6 +1,6 @@
 .PHONY: run
 run:
-	poetry run python run.py
+	poetry run python run.py --mode main
 
 .PHONY: fmt-lnt
 fmt-lnt:

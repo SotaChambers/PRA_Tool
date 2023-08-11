@@ -1,5 +1,5 @@
 @echo off
 
-py -m poetry run python run.py --mode dummy
+py -m poetry run python run.py --mode main
 
 pause
