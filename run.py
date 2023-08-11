@@ -12,7 +12,7 @@ from utils.utils import get_dt_now
 @click.command()
 @click.argument("general_cfg_path", type=click.Path(exists=True), default=Path("config/general.yaml"))
 @click.argument("secret_cfg_path", type=click.Path(exists=True), default=Path("config/secret.yaml"))
-@click.argument("mode", type=str, default="dummy")
+@click.option("--mode", type=str, default="dummy")
 def main(
     general_cfg_path: Path,
     secret_cfg_path: Path,

@@ -9,6 +9,7 @@
     - [自身の使用している Chrome の Version を確かめる](#自身の使用している-chrome-の-version-を確かめる)
     - [Driverのインストール](#driverのインストール)
     - [Driverの配置](#driverの配置)
+- [2. 実行準備(初回のみ)](#2-実行準備初回のみ)
 - [2. 実行方法](#2-実行方法)
 - [APPENDIX](#appendix)
   - [ChatGPT API TOKENの取得方法](#chatgpt-api-tokenの取得方法)
@@ -86,7 +87,19 @@ Poetry (version 1.3.2)
 ### Driverの配置
 zipを解凍し，`chromedriver.exe`を`driver`フォルダの下に移動する
 
+
+# 2. 実行準備(初回のみ)
+1. `data`フォルダ以下に送付した`ChatGPT_スカウト文章.xlsx`を置く
+2. `config/secret.yaml`を設定する
+   - `secret.example.yaml`のファイル名を`secret.yaml`に修正
+   - id, password, API_TOKEN を埋める
+     - id: ログインする際のid(メールアドレス)
+     - password: ログインする際のパスワード
+     - API_TOKEN: ChatGPTのAPI TOKEN(※取得方法はAPPENDIX)
+
+
 # 2. 実行方法
+
 1. `config/general.yaml`を設定する
 以下の欄の値を必要に応じて修正する
 ```yaml
@@ -99,14 +112,8 @@ max_num_people: 1
 - max_num_people
   - 一回の実行で何人の人の文章を作成するかを設定する欄
 
-2. `config/secret.yaml`を設定する
-- `secret.example.yaml`のファイル名を`secret.yaml`に修正
-- id, password, API_TOKEN を埋める
-  - id: ログインする際のid(メールアドレス)
-  - password: ログインする際のパスワード
-  - API_TOKEN: ChatGPTのAPI TOKEN(※取得方法はAPPENDIX)
 
-1. `run.bat`をダブルクリックする
+2. `run.bat`をダブルクリックする
 
 
 # APPENDIX
