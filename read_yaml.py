@@ -41,11 +41,11 @@ class Config(BaseModel):
 
 
 def read_secret_yaml(yaml_path: Path) -> SecretConfig:
-    return SecretConfig.parse_obj(yaml.safe_load(yaml_path.open("r")))
+    return SecretConfig.parse_obj(yaml.safe_load(yaml_path.open("r", encoding="utf-8")))
 
 
 def read_general_config(yaml_path: Path) -> GeneralConfig:
-    return GeneralConfig.parse_obj(yaml.safe_load(yaml_path.open("r")))
+    return GeneralConfig.parse_obj(yaml.safe_load(yaml_path.open("r", encoding="utf-8")))
 
 
 def read_config(secret_path: Path, general_path: Path) -> Config:
