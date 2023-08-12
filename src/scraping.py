@@ -60,22 +60,29 @@ class Scraper:
             self._candidate_list_to_candidate_detail()
         except Exception as e:
             logger.error(f"Error occurred: {e}")
+            logger.error("エラーが発生しました．管理者へ連絡してください")
 
     def _login(self) -> None:
-        logger.info("Login...")
+        logger.info("Login開始")
         self.driver.find_element(By.XPATH, '//*[@id="head_hunter_email"]').send_keys(self.id)
         self.driver.find_element(By.XPATH, '//*[@id="head_hunter_password"]').send_keys(self.password)
         self.driver.find_element(By.XPATH, '//*[@id="new_head_hunter"]/div/input').click()
+        logger.info("Login終了")
 
     def _home_to_scout(self) -> None:
+        logger.info("_home_to_scout開始")
         logger.info("Click スカウト Button...")
         self.driver.find_element(By.XPATH, "/html/body/header/nav/ul/li[2]/a").click()
+        logger.info("_home_to_scout終了")
 
     def _scout_to_condition_list(self) -> None:
+        logger.info("_scout_to_condition_list開始")
         logger.info("Click 検索条件リスト Button...")
         self.driver.find_element(By.XPATH, '//*[@id="AG-RS-01"]/div/div[1]/ul/li[2]/a').click()
+        logger.info("_scout_to_condition_list終了")
 
     def _condition_list_to_candidate_list(self) -> None:
+        logger.info("_condition_list_to_candidate_list開始")
         logger.info(f"Select Keyword : {self.keyword}...")
         keyword = self.keyword
         base_xpath = '//*[@id="AG-SK-01"]/div/div[1]/table/tbody/tr[{}]/td[1]/p'
@@ -97,17 +104,19 @@ class Scraper:
             if tmp_keyword == keyword:
                 logger.info(f"Click 検索 Button of {self.keyword}...")
                 self.driver.find_element(By.XPATH, f'//*[@id="AG-SK-01"]/div/div[1]/table/tbody/tr[{i}]/td[6]/a').click()
+                logger.info("_condition_list_to_candidate_list終了")
                 return
         # 見つからなかった時のエラー
         logger.error(f"Not Found {self.keyword}")
         raise NotImplementedError("検索ワードが見つかりませんでした")
 
     def _candidate_list_to_candidate_detail(self) -> None:
+        logger.info("_condition_list_to_candidate_list開始")
         start_idx = 4
         base_xpath = '//*[@id="drawer"]/div[{}]/div'
         logger.info("Select Candidate...")
         for i in range(start_idx, start_idx + self.max_num_people):
-            logger.info(f"No. {i}")
+            logger.info(f"{i} 人目の対応開始...")
             xpath = base_xpath.format(i)
             element = self.driver.find_element(By.XPATH, xpath)
             element_id = element.get_attribute("id")
