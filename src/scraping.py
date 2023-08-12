@@ -139,7 +139,7 @@ class Scraper:
                     By.XPATH,
                     '//*[@id="drawer"]/div[3]/div[2]/div/div[1]/div/div[1]/div[4]/div/div/div[1]/table/tbody/tr[6]/td/p',
                 ).text
-                self.profile = self.driver.find_element(
+                profile = self.driver.find_element(
                     By.XPATH,
                     '//*[@id="drawer"]/div[3]/div[2]/div/div[1]/div/div[1]/div[4]/div/div/div[1]/table/tbody/tr[7]/td/pre',
                 ).text
@@ -152,10 +152,12 @@ class Scraper:
                     By.XPATH,
                     '//*[@id="drawer"]/div[3]/div[2]/div/div[1]/div/div[1]/div[3]/div/div/div[1]/table/tbody/tr[6]/td/p',
                 ).text
-                self.profile = self.driver.find_element(
+                profile = self.driver.find_element(
                     By.XPATH,
                     '//*[@id="drawer"]/div[3]/div[2]/div/div[1]/div/div[1]/div[3]/div/div/div[1]/table/tbody/tr[7]/td/pre',
                 ).text
+                logger.info(f"文字数は{len(self.profile)}")
+            self.profile = profile[:2000]
             logger.info(f"企業名 : {self.company_name}, 年収 : {self.salary}, プロフィール : \n {self.profile}")
 
             # 新しいタブを開く

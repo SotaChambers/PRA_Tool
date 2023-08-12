@@ -115,8 +115,6 @@ max_num_people: 1
 
 # APPENDIX
 ## ChatGPT API TOKENの取得方法
-- 前提
-  - ChatGPTの有料会員であること
 - 方法
   - [公式サイト](https://auth0.openai.com/u/login/identifier?state=hKFo2SBITkdDR0tDUnI4ZmgyaS16c1dURXJVTExyQjhheF9raqFur3VuaXZlcnNhbC1sb2dpbqN0aWTZIElENThVck1BZFFwenJLVTdfRVJkZ183TlFJZVJRY2tIo2NpZNkgRFJpdnNubTJNdTQyVDNLT3BxZHR3QjNOWXZpSFl6d0Q)へLoginする
   - `Billing/Overview`を選択し，`Set up paid account`をクリック
