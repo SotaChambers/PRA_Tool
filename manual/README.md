@@ -79,7 +79,9 @@ Poetry (version 1.3.2)
 ```
 
 ### Driverのインストール
-[こちら](https://chromedriver.chromium.org/downloads)から該当のChrome Driverをインストールする
+[こちら](https://chromedriver.chromium.org/downloads)から該当のChrome Driverをインストールする．
+
+※最新のversionは[こちら](https://googlechromelabs.github.io/chrome-for-testing/)にあります．
 
 ### Driverの配置
 zipを解凍し，`chromedriver.exe`を`driver`フォルダの下に移動する
@@ -96,6 +98,7 @@ zipを解凍し，`chromedriver.exe`を`driver`フォルダの下に移動する
 
 
 # 3. 実行方法
+※Macの場合は，初回実行時セキュリティに引っ掛かるので，`システム環境設定/プライバシーとセキュリティ/そのまま許可`をする
 
 1. `config/general.yaml`を設定する
 以下の欄の値を必要に応じて修正する
